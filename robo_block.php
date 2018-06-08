@@ -10,14 +10,11 @@ class RoboBlocks {
 
     public function move_onto($b, $a) {
         $this->clear_over($a);
-        $this->clear_over($b);
 
         $this->move($b, $a);
     }
 
     public function move_over($b, $a){
-        $this->clear_over($b);
-
         $this->move($b, $a);
     }
 
@@ -165,5 +162,4 @@ while(True){
         echo $robo_block;
     }
 }
-
 ?>

@@ -49,7 +49,7 @@ $ phpunit RoboBlockTest
 
 
 #### Design
-The design is faily simple. Alongside the main array that holds the blocks, I chose to include an index to track the location of the blocks. This allows for linear time lookups of blocks, making the code much faster than if it had to manually loop over the array looking for the blocks. See code comments for details. Additionally, there is no hard limit on the number of blocks that can be
+The design is fairly simple. Alongside the main array that holds the blocks, I chose to include an index to track the location of the blocks. This allows for linear time lookups of blocks, making the code much faster than if it had to manually loop over the array looking for the blocks. See code comments for details. Additionally, there is no hard limit on the number of blocks that can be
 played with.
 
 Given the time, I would have liked to make more of an effort to better abstract some of the methods. I do see some very similar code repeated in places, though a clean abstraction wasn't immediately obvious to me. 

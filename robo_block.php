@@ -9,44 +9,28 @@ class RoboBlocks {
     }
 
     public function move_onto($b, $a) {
-        $this->clear_over($a);
-
-        $this->move($b, $a);
+        if ($this->block_index[$a] != $this->block_index[$b]) {
+            $this->clear_over($a);
+            $this->move($b, $a);
+        }
     }
 
     public function move_over($b, $a){
-        $this->move($b, $a);
+        if ($this->block_index[$a] != $this->block_index[$b]) {
+            $this->move($b, $a);
+        }
     }
 
     public function pile_onto($b, $a) {
-        $this-clear_over($a);
-
-        $this->pile($b, $a);
+        if ($this->block_index[$a] != $this->block_index[$b]) {
+            $this-clear_over($a);
+            $this->pile($b, $a);
+        }
     }
 
     public function pile_over($b, $a) {
-        $this->pile($b, $a);
-    }
-
-    public function parse_operation($operation) {
-        $action = $operation[0];
-        $a = (int) $operation[1];
-        $modifier = $operation[2];
-        $b = (int) $operation[3];
-
-        if ($this->block_index[$a] == $this->block_index[$b]) {
-            // ignore operation if blocks are in the same stack
-            return;
-        } elseif ($action == "move" && $modifier == "onto") {
-            $this->move_onto($a, $b);
-        } elseif ($action == "move" && $modifier == "over") {
-            $this->move_over($a, $b);
-        } elseif ($action == "pile" && $modifier == "onto") {
-            $this->pile_onto($a, $b);
-        } elseif ($action == "pile" && $modifier == "over") {
-            $this->pile_over($a, $b);
-        } else {
-            echo "Does not compute";
+        if ($this->block_index[$a] != $this->block_index[$b]) {
+            $this->pile($b, $a);
         }
     }
 
@@ -138,28 +122,6 @@ class RoboBlocks {
                 $this->return_home($block);
             }
         }
-    }
-}
-
-echo "Welcome to robo blocks!\n";
-echo "How many blocks would you like to play with? ";
-$handle = fopen ("php://stdin","r");
-$num_blocks = fgets($handle);
-
-$robo_block = new RoboBlocks((int) $num_blocks);
-while(True){
-    echo "\nWhat would you like to do? ";
-    $operation = explode(' ', fgets($handle));
-    // strip newline from end of string
-    $operation[0] = trim(preg_replace('/\s\s+/', '', $operation[0]));
-    if ("$operation[0]" == "quit") {
-        echo $robo_block;
-        break;
-    } elseif (count($operation) != 4) {
-        echo "Invalide option (word count)";
-    } else {
-        $robo_block->parse_operation($operation);
-        echo $robo_block;
     }
 }
 ?>

@@ -23,7 +23,7 @@ class RoboBlocks {
 
     public function pile_onto($b, $a) {
         if ($this->block_index[$a] != $this->block_index[$b]) {
-            $this-clear_over($a);
+            $this->clear_over($a);
             $this->pile($b, $a);
         }
     }
@@ -32,6 +32,10 @@ class RoboBlocks {
         if ($this->block_index[$a] != $this->block_index[$b]) {
             $this->pile($b, $a);
         }
+    }
+
+    public function get_blocks() {
+        return $this->blocks;
     }
 
     public function __toString() {
@@ -81,6 +85,10 @@ class RoboBlocks {
         $this->clear_over($b);
         array_pop($this->blocks[$location_b]);
         array_push($this->blocks[$location_a], $b);
+
+        //reset indexes
+        $this->blocks[$location_a] = array_values($this->blocks[$location_a]);
+        
         $this->block_index[$b] = $location_a;
     }
 
@@ -93,13 +101,16 @@ class RoboBlocks {
         $index_b = array_search($b, $this->blocks[$location_b]);
 
         // get block b and everyone on top, and move them over block a
-        $block_stack = array_slice($this->blocks[$location_b], $index_b, NULL, true);
-        $this->blocks[$location_a] += $block_stack;
+        $block_stack = array_slice($this->blocks[$location_b], $index_b, NULL, True);
+        $this->blocks[$location_a] = array_merge($this->blocks[$location_a], $block_stack);
 
         // since slice doesn't pop the values, remove them manually
         for($i = count($this->blocks[$location_b]) - 1; $i >=$index_b; $i--){
             unset($this->blocks[$location_b][$i]);
         }
+
+        //reset indexes
+        $this->blocks[$location_a] = array_values($this->blocks[$location_a]);
 
         // update the index of each block with new location
         foreach($block_stack as $block) {
